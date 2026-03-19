@@ -64,6 +64,16 @@ export function groceryReducer(state: GroceryState, action: GroceryAction): Groc
         ),
       };
     }
+    case 'REORDER': {
+      const sorted = [...state.items].sort((a, b) => a.purchaseOrder - b.purchaseOrder);
+      const activeIndex = sorted.findIndex(item => item.id === action.activeId);
+      const overIndex = sorted.findIndex(item => item.id === action.overId);
+      if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) return state;
+      const [moved] = sorted.splice(activeIndex, 1);
+      sorted.splice(overIndex, 0, moved);
+      const reordered = sorted.map((item, index) => ({ ...item, purchaseOrder: index }));
+      return { ...state, items: reordered };
+    }
     default:
       return state;
   }

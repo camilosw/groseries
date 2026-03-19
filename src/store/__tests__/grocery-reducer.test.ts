@@ -97,6 +97,45 @@ describe('DELETE_ITEM', () => {
   });
 });
 
+describe('REORDER', () => {
+  it('moves item to new position', () => {
+    const items = [
+      makeItem({ id: '1', name: 'A', purchaseOrder: 0 }),
+      makeItem({ id: '2', name: 'B', purchaseOrder: 1 }),
+      makeItem({ id: '3', name: 'C', purchaseOrder: 2 }),
+    ];
+    const state = makeState(items);
+    const next = groceryReducer(state, { type: 'REORDER', activeId: '1', overId: '3' });
+    const sorted = [...next.items].sort((a, b) => a.purchaseOrder - b.purchaseOrder);
+    expect(sorted.map(i => i.name)).toEqual(['B', 'C', 'A']);
+  });
+
+  it('assigns sequential purchaseOrder values starting at 0', () => {
+    const items = [
+      makeItem({ id: '1', purchaseOrder: 0 }),
+      makeItem({ id: '2', name: 'Eggs', purchaseOrder: 1 }),
+      makeItem({ id: '3', name: 'Bread', purchaseOrder: 2 }),
+    ];
+    const state = makeState(items);
+    const next = groceryReducer(state, { type: 'REORDER', activeId: '3', overId: '1' });
+    const sorted = [...next.items].sort((a, b) => a.purchaseOrder - b.purchaseOrder);
+    expect(sorted.map(i => i.purchaseOrder)).toEqual([0, 1, 2]);
+  });
+
+  it('is a no-op when activeId equals overId', () => {
+    const items = [makeItem({ id: '1' }), makeItem({ id: '2', name: 'Eggs', purchaseOrder: 1 })];
+    const state = makeState(items);
+    const next = groceryReducer(state, { type: 'REORDER', activeId: '1', overId: '1' });
+    expect(next).toBe(state);
+  });
+
+  it('is a no-op when id not found', () => {
+    const state = makeState([makeItem({ id: '1' })]);
+    const next = groceryReducer(state, { type: 'REORDER', activeId: 'x', overId: '1' });
+    expect(next).toBe(state);
+  });
+});
+
 describe('SET_SORT_MODE', () => {
   it('sets sortMode to alphabetical', () => {
     const state = makeState([]);

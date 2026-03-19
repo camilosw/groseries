@@ -1,6 +1,6 @@
 # Grocery List App — Project State
 
-## Current phase: Phase 5 complete (Add screen)
+## Current phase: Phase 6 complete (Order screen)
 
 ## Stack
 - React 19 + TypeScript + Vite
@@ -12,14 +12,14 @@
 - Purchase history: timestamp array, exponential decay frequency scoring
 - Purchase interval displayed as `c/Nd` (median gap, shown when ≥2 purchases)
 - Add button is a FAB, not inline add-bar
-- Reordering on dedicated Order screen (not inline)
+- Reordering on dedicated Order screen (accessible from header ⋮ menu)
 - UI language: English
 
 ## File structure so far
 ```
 src/
   main.tsx          -- Entry point
-  App.tsx           -- GroceryProvider + Header + screen router (main | add)
+  App.tsx           -- GroceryProvider + Header + screen router (main | add | order)
   App.css           -- Global styles: CSS vars, reset, .app container, notebook effect
   index.css         -- Minimal body reset
   types.ts          -- GroceryItem interface, PurchasedSortMode type
@@ -33,10 +33,10 @@ src/
     grocery-reducer.ts          -- groceryReducer + GroceryAction type (all actions implemented)
     grocery-context.tsx         -- GroceryProvider, useGroceries hook (empty initial state)
     __tests__/
-      grocery-reducer.test.ts   -- 16 tests (all passing)
+      grocery-reducer.test.ts   -- 20 tests (all passing)
       storage.test.ts           -- 6 tests (all passing)
   components/
-    Header.tsx / Header.css     -- Sticky orange header
+    Header.tsx / Header.css     -- Sticky orange header with ⋮ menu button + dropdown
     SectionHeader.tsx           -- "To Buy (N)" / "Purchased (N)" divider
     BuyItem.tsx                 -- Unchecked item (checkbox + name + c/Nd badge)
     BuyList.tsx                 -- Sorted to-buy list + empty state
@@ -49,18 +49,19 @@ src/
   screens/
     MainScreen.tsx / MainScreen.css  -- To Buy + Purchased sections + FAB
     AddScreen.tsx / AddScreen.css    -- Search input + item list + new item row
+    OrderScreen.tsx / OrderScreen.css -- Drag-and-drop reorder list (@dnd-kit, touch support)
     __tests__/
       MainScreen.test.tsx       -- 11 tests (all passing)
       AddScreen.test.tsx        -- 8 tests (all passing)
 ```
 
-## What's next: Phase 6
-- Add menu button (three-dot icon) to Header
-- Create OrderScreen with drag-and-drop reordering
-- REORDER action in the reducer
-- Wire up main → order → main navigation in App.tsx
+## What's next: Phase 7 (Polish)
+- Check/uncheck transition animations
+- Verify touch interactions work correctly on mobile
+- Final persistence verification (reload preserves all state)
+- No errors in the browser console
 
 ## Running
 - `pnpm dev` — dev server (empty initial state; FAB opens add screen)
-- `pnpm test` — run all tests with Vitest (60 passing)
+- `pnpm test` — run all tests with Vitest (64 passing)
 - `pnpm build` — production build
