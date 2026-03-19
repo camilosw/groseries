@@ -10,9 +10,11 @@
 }
 
 .app-header__icon {
-  font-size: 28px;
+  width: 32px;
+  height: 32px;
   margin-right: 10px;
-  vertical-align: middle;
+  flex-shrink: 0;
+  color: #fff;
 }
 
 .app-header__title {
