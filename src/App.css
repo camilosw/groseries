@@ -12,8 +12,8 @@
   --text-placeholder: #c5b8a8;
   --badge-bg: #ffd6cc;
   --badge-text: #c8442b;
-  --font-hand: "Caveat", cursive;
-  --font-ui: "Nunito", sans-serif;
+  --font-hand: 'Caveat', cursive;
+  --font-ui: 'Nunito', sans-serif;
 }
 
 /* Reset */
@@ -45,7 +45,7 @@ body {
 
 /* Notebook line effect */
 .app::before {
-  content: "";
+  content: '';
   position: fixed;
   top: 0;
   left: 50%;

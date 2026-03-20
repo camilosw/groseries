@@ -9,12 +9,12 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 function renderWithItems(items: GroceryItem[], sortMode = 'frequency') {
   localStorage.setItem(
     'groceries-app-state',
-    JSON.stringify({ items, sortMode })
+    JSON.stringify({ items, sortMode }),
   );
   return render(
     <GroceryProvider>
-      <PurchasedList items={items.filter(i => i.bought)} />
-    </GroceryProvider>
+      <PurchasedList items={items.filter((i) => i.bought)} />
+    </GroceryProvider>,
   );
 }
 
@@ -25,8 +25,20 @@ describe('PurchasedList', () => {
 
   it('renders purchased items', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: true },
-      { id: '2', name: 'Eggs', purchaseHistory: [], purchaseOrder: 1, bought: true },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
+      {
+        id: '2',
+        name: 'Eggs',
+        purchaseHistory: [],
+        purchaseOrder: 1,
+        bought: true,
+      },
     ]);
     expect(screen.getByText('Milk')).toBeInTheDocument();
     expect(screen.getByText('Eggs')).toBeInTheDocument();
@@ -50,7 +62,11 @@ describe('PurchasedList', () => {
       {
         id: '2',
         name: 'Frequent',
-        purchaseHistory: [now - 1 * MS_PER_DAY, now - 8 * MS_PER_DAY, now - 15 * MS_PER_DAY],
+        purchaseHistory: [
+          now - 1 * MS_PER_DAY,
+          now - 8 * MS_PER_DAY,
+          now - 15 * MS_PER_DAY,
+        ],
         purchaseOrder: 1,
         bought: true,
       },
@@ -62,8 +78,20 @@ describe('PurchasedList', () => {
 
   it('toggles to alphabetical sort', () => {
     renderWithItems([
-      { id: '1', name: 'Zebra', purchaseHistory: [], purchaseOrder: 0, bought: true },
-      { id: '2', name: 'Apple', purchaseHistory: [], purchaseOrder: 1, bought: true },
+      {
+        id: '1',
+        name: 'Zebra',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
+      {
+        id: '2',
+        name: 'Apple',
+        purchaseHistory: [],
+        purchaseOrder: 1,
+        bought: true,
+      },
     ]);
     fireEvent.click(screen.getByText('A–Z'));
     const items = screen.getAllByRole('checkbox');
@@ -90,7 +118,7 @@ describe('PurchasedList', () => {
           bought: true,
         },
       ],
-      'alphabetical'
+      'alphabetical',
     );
     fireEvent.click(screen.getByText('Frequency'));
     const items = screen.getAllByRole('checkbox');

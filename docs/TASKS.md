@@ -9,6 +9,7 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Configure testing dependencies, web fonts, and base styles extracted from the mockup. Clean up the Vite template code. Upon completion, the app should display an empty screen with the header and the notebook-style background from the mockup.
 
 **Acceptance criteria:**
+
 - Vitest is configured and `pnpm test` runs without errors (even if there are no tests yet)
 - `index.html` includes Google Fonts (Caveat + Nunito) and the title "Grocery List"
 - `src/App.css` contains CSS variables and global styles from the mockup (colors, typography, notebook effect)
@@ -24,6 +25,7 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Implement frequency calculation functions based on exponential decay, purchase interval calculation, and history pruning. These functions are the calculation engine of the app.
 
 **Acceptance criteria:**
+
 - `frequencyScore(history, now?)` computes the sum of `exp(-lambda * days)` where `lambda = ln(2)/30`
   - A purchase made today contributes ~1.0 to the score
   - A purchase made 30 days ago contributes ~0.5
@@ -46,11 +48,13 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Implement the "To Buy" section of the main screen, including the state management needed (reducer, context, localStorage persistence) to support this functionality. Seed data must be preloaded in the initial state so the list can be visually verified (this seed data will be removed once the add screen is implemented).
 
 **State to implement in this task:**
+
 - Reducer with actions: `CHECK_ITEM`, `UNCHECK_ITEM` (the minimum for this screen)
 - React context with provider and `useGroceries` hook
 - localStorage persistence (save on every change, restore on load, fallback to seed data if no saved data exists)
 
 **Acceptance criteria:**
+
 - On first load, preloaded items (seed data) are displayed in the "To Buy" list
 - The section header "To Buy" is shown with the item count (e.g., "To Buy (3)")
 - Items are displayed sorted by `purchaseOrder`
@@ -72,10 +76,12 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Implement the "Purchased" section below the "To Buy" list. Shows purchased items with sorting options, unchecking, and deletion. Seed data should include already-purchased items so this list can be visually verified.
 
 **Additional state to implement:**
+
 - `DELETE_ITEM` action in the reducer
 - `SET_SORT_MODE` action in the reducer
 
 **Acceptance criteria:**
+
 - The section header "Purchased" is shown with the item count (e.g., "Purchased (5)")
 - Items are sorted by purchase frequency (highest score first) by default
 - A toggle at the top allows switching between frequency and alphabetical sorting
@@ -93,11 +99,13 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Implement the floating action button (FAB) and the add items screen with search, filtering, and new item creation. Upon completing this task, seed data must be removed since the user can now create items from the add screen.
 
 **Additional state to implement:**
+
 - `CREATE_AND_ADD` action in the reducer
 - `ADD_TO_BUY` action in the reducer
 - Remove seed data; empty initial state if no data exists in localStorage
 
 **Acceptance criteria:**
+
 - A floating "+" button appears in the bottom-right corner of the main screen
 - Pressing the FAB replaces the main screen with the add screen
 - The add screen contains: a text field to search/create, the list of purchased items below, and a button to go back
@@ -121,9 +129,11 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Implement the ordering screen accessible from a menu in the header. Allows reordering all items (to-buy and purchased) via drag-and-drop.
 
 **Additional state to implement:**
+
 - `REORDER` action in the reducer
 
 **Acceptance criteria:**
+
 - The header has a menu button (three-dot icon)
 - The menu includes an "Order" option
 - Selecting "Order" opens the ordering screen
@@ -143,6 +153,7 @@ Incremental task list based on `REQUIREMENTS.md`. Each task produces a measurabl
 **Description:** Visual refinements, animations, and end-to-end app verification.
 
 **Acceptance criteria:**
+
 - Check/uncheck transitions have smooth animations
 - Touch interactions work correctly on mobile devices
 - Reloading the page preserves all state (items, order, checks)

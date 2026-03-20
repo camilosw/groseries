@@ -62,7 +62,9 @@ describe('UNCHECK_ITEM', () => {
   });
 
   it('preserves purchaseOrder', () => {
-    const state = makeState([makeItem({ id: '1', bought: true, purchaseOrder: 3 })]);
+    const state = makeState([
+      makeItem({ id: '1', bought: true, purchaseOrder: 3 }),
+    ]);
     const next = groceryReducer(state, { type: 'UNCHECK_ITEM', id: '1' });
     expect(next.items[0].purchaseOrder).toBe(3);
   });
@@ -77,7 +79,10 @@ describe('UNCHECK_ITEM', () => {
 
 describe('DELETE_ITEM', () => {
   it('removes the item from the list', () => {
-    const state = makeState([makeItem({ id: '1' }), makeItem({ id: '2', name: 'Eggs' })]);
+    const state = makeState([
+      makeItem({ id: '1' }),
+      makeItem({ id: '2', name: 'Eggs' }),
+    ]);
     const next = groceryReducer(state, { type: 'DELETE_ITEM', id: '1' });
     expect(next.items).toHaveLength(1);
     expect(next.items[0].id).toBe('2');
@@ -105,9 +110,15 @@ describe('REORDER', () => {
       makeItem({ id: '3', name: 'C', purchaseOrder: 2 }),
     ];
     const state = makeState(items);
-    const next = groceryReducer(state, { type: 'REORDER', activeId: '1', overId: '3' });
-    const sorted = [...next.items].sort((a, b) => a.purchaseOrder - b.purchaseOrder);
-    expect(sorted.map(i => i.name)).toEqual(['B', 'C', 'A']);
+    const next = groceryReducer(state, {
+      type: 'REORDER',
+      activeId: '1',
+      overId: '3',
+    });
+    const sorted = [...next.items].sort(
+      (a, b) => a.purchaseOrder - b.purchaseOrder,
+    );
+    expect(sorted.map((i) => i.name)).toEqual(['B', 'C', 'A']);
   });
 
   it('assigns sequential purchaseOrder values starting at 0', () => {
@@ -117,21 +128,38 @@ describe('REORDER', () => {
       makeItem({ id: '3', name: 'Bread', purchaseOrder: 2 }),
     ];
     const state = makeState(items);
-    const next = groceryReducer(state, { type: 'REORDER', activeId: '3', overId: '1' });
-    const sorted = [...next.items].sort((a, b) => a.purchaseOrder - b.purchaseOrder);
-    expect(sorted.map(i => i.purchaseOrder)).toEqual([0, 1, 2]);
+    const next = groceryReducer(state, {
+      type: 'REORDER',
+      activeId: '3',
+      overId: '1',
+    });
+    const sorted = [...next.items].sort(
+      (a, b) => a.purchaseOrder - b.purchaseOrder,
+    );
+    expect(sorted.map((i) => i.purchaseOrder)).toEqual([0, 1, 2]);
   });
 
   it('is a no-op when activeId equals overId', () => {
-    const items = [makeItem({ id: '1' }), makeItem({ id: '2', name: 'Eggs', purchaseOrder: 1 })];
+    const items = [
+      makeItem({ id: '1' }),
+      makeItem({ id: '2', name: 'Eggs', purchaseOrder: 1 }),
+    ];
     const state = makeState(items);
-    const next = groceryReducer(state, { type: 'REORDER', activeId: '1', overId: '1' });
+    const next = groceryReducer(state, {
+      type: 'REORDER',
+      activeId: '1',
+      overId: '1',
+    });
     expect(next).toBe(state);
   });
 
   it('is a no-op when id not found', () => {
     const state = makeState([makeItem({ id: '1' })]);
-    const next = groceryReducer(state, { type: 'REORDER', activeId: 'x', overId: '1' });
+    const next = groceryReducer(state, {
+      type: 'REORDER',
+      activeId: 'x',
+      overId: '1',
+    });
     expect(next).toBe(state);
   });
 });
@@ -139,20 +167,29 @@ describe('REORDER', () => {
 describe('SET_SORT_MODE', () => {
   it('sets sortMode to alphabetical', () => {
     const state = makeState([]);
-    const next = groceryReducer(state, { type: 'SET_SORT_MODE', mode: 'alphabetical' });
+    const next = groceryReducer(state, {
+      type: 'SET_SORT_MODE',
+      mode: 'alphabetical',
+    });
     expect(next.sortMode).toBe('alphabetical');
   });
 
   it('sets sortMode to frequency', () => {
     const state = { ...makeState([]), sortMode: 'alphabetical' as const };
-    const next = groceryReducer(state, { type: 'SET_SORT_MODE', mode: 'frequency' });
+    const next = groceryReducer(state, {
+      type: 'SET_SORT_MODE',
+      mode: 'frequency',
+    });
     expect(next.sortMode).toBe('frequency');
   });
 
   it('does not modify items', () => {
     const items = [makeItem({ id: '1' })];
     const state = makeState(items);
-    const next = groceryReducer(state, { type: 'SET_SORT_MODE', mode: 'alphabetical' });
+    const next = groceryReducer(state, {
+      type: 'SET_SORT_MODE',
+      mode: 'alphabetical',
+    });
     expect(next.items).toEqual(items);
   });
 });

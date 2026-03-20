@@ -16,7 +16,7 @@ export function GroceryProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(
     groceryReducer,
     undefined,
-    () => loadState() ?? { items: [], sortMode: 'frequency' as const }
+    () => loadState() ?? { items: [], sortMode: 'frequency' as const },
   );
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export function GroceryProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useGroceries(): GroceryContextValue {
   const ctx = useContext(GroceryContext);
   if (!ctx) throw new Error('useGroceries must be used within GroceryProvider');

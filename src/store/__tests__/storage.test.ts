@@ -37,7 +37,7 @@ describe('saveState / loadState', () => {
   it('returns null when items is not an array', () => {
     localStorage.setItem(
       'groceries-app-state',
-      JSON.stringify({ items: 'bad', sortMode: 'frequency' })
+      JSON.stringify({ items: 'bad', sortMode: 'frequency' }),
     );
     expect(loadState()).toBeNull();
   });

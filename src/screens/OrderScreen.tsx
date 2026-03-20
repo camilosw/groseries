@@ -25,8 +25,14 @@ interface SortableItemProps {
 }
 
 function SortableItem({ item }: SortableItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: item.id });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -40,10 +46,17 @@ function SortableItem({ item }: SortableItemProps) {
       style={style}
       className={`order-item${isDragging ? ' order-item--dragging' : ''}`}
     >
-      <span className={`order-item__name${item.bought ? ' order-item__name--bought' : ''}`}>
+      <span
+        className={`order-item__name${item.bought ? ' order-item__name--bought' : ''}`}
+      >
         {item.name}
       </span>
-      <span className="order-item__handle" {...attributes} {...listeners} aria-label="Drag to reorder">
+      <span
+        className="order-item__handle"
+        {...attributes}
+        {...listeners}
+        aria-label="Drag to reorder"
+      >
         ⠿
       </span>
     </li>
@@ -53,14 +66,16 @@ function SortableItem({ item }: SortableItemProps) {
 export function OrderScreen({ onClose }: OrderScreenProps) {
   const { state, dispatch } = useGroceries();
 
-  const sorted = [...state.items].sort((a, b) => a.purchaseOrder - b.purchaseOrder);
-  const ids = sorted.map(item => item.id);
+  const sorted = [...state.items].sort(
+    (a, b) => a.purchaseOrder - b.purchaseOrder,
+  );
+  const ids = sorted.map((item) => item.id);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(TouchSensor, {
       activationConstraint: { delay: 250, tolerance: 5 },
-    })
+    }),
   );
 
   function handleDragEnd(event: DragEndEvent) {
@@ -76,7 +91,11 @@ export function OrderScreen({ onClose }: OrderScreenProps) {
   return (
     <div className="order-screen">
       <div className="order-screen__header">
-        <button className="order-screen__back" onClick={onClose} aria-label="Back">
+        <button
+          className="order-screen__back"
+          onClick={onClose}
+          aria-label="Back"
+        >
           ←
         </button>
         <span className="order-screen__title">Order</span>
@@ -85,7 +104,7 @@ export function OrderScreen({ onClose }: OrderScreenProps) {
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <SortableContext items={ids} strategy={verticalListSortingStrategy}>
           <ul className="order-screen__list">
-            {sorted.map(item => (
+            {sorted.map((item) => (
               <SortableItem key={item.id} item={item} />
             ))}
           </ul>

@@ -7,12 +7,12 @@ import type { GroceryItem } from '../../types';
 function renderWithItems(items: GroceryItem[]) {
   localStorage.setItem(
     'groceries-app-state',
-    JSON.stringify({ items, sortMode: 'frequency' })
+    JSON.stringify({ items, sortMode: 'frequency' }),
   );
   return render(
     <GroceryProvider>
       <MainScreen onAdd={() => {}} />
-    </GroceryProvider>
+    </GroceryProvider>,
   );
 }
 
@@ -23,8 +23,20 @@ describe('MainScreen', () => {
 
   it('renders to-buy items sorted by purchaseOrder', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 1, bought: false },
-      { id: '2', name: 'Eggs', purchaseHistory: [], purchaseOrder: 0, bought: false },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 1,
+        bought: false,
+      },
+      {
+        id: '2',
+        name: 'Eggs',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: false,
+      },
     ]);
     const checkboxes = screen.getAllByRole('checkbox');
     // Eggs (order 0) should appear before Milk (order 1)
@@ -34,10 +46,18 @@ describe('MainScreen', () => {
 
   it('checking an item removes it from the to-buy list', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: false },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: false,
+      },
     ]);
     fireEvent.click(screen.getByLabelText(/Mark Milk as purchased/i));
-    expect(screen.queryByLabelText(/Mark Milk as purchased/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(/Mark Milk as purchased/i),
+    ).not.toBeInTheDocument();
   });
 
   it('shows empty state when no items to buy', () => {
@@ -47,8 +67,20 @@ describe('MainScreen', () => {
 
   it('shows section header with correct item count', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: false },
-      { id: '2', name: 'Eggs', purchaseHistory: [], purchaseOrder: 1, bought: false },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: false,
+      },
+      {
+        id: '2',
+        name: 'Eggs',
+        purchaseHistory: [],
+        purchaseOrder: 1,
+        bought: false,
+      },
     ]);
     expect(screen.getByText('To Buy')).toBeInTheDocument();
     expect(screen.getByText('(2)')).toBeInTheDocument();
@@ -56,11 +88,27 @@ describe('MainScreen', () => {
 
   it('does not render bought items in the to-buy list', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: false },
-      { id: '2', name: 'Eggs', purchaseHistory: [], purchaseOrder: 1, bought: true },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: false,
+      },
+      {
+        id: '2',
+        name: 'Eggs',
+        purchaseHistory: [],
+        purchaseOrder: 1,
+        bought: true,
+      },
     ]);
-    expect(screen.getByLabelText(/Mark Milk as purchased/i)).toBeInTheDocument();
-    expect(screen.queryByLabelText(/Mark Eggs as purchased/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/Mark Milk as purchased/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(/Mark Eggs as purchased/i),
+    ).not.toBeInTheDocument();
   });
 
   it('shows c/Nd badge when item has 2+ purchases', () => {
@@ -80,23 +128,45 @@ describe('MainScreen', () => {
 
   it('renders purchased items', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: true },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
     ]);
     expect(screen.getByText('Milk')).toBeInTheDocument();
-    expect(screen.getByLabelText(/Mark Milk as not purchased/i)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/Mark Milk as not purchased/i),
+    ).toBeInTheDocument();
   });
 
   it('unchecking a purchased item moves it to to-buy', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: true },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
     ]);
     fireEvent.click(screen.getByLabelText(/Mark Milk as not purchased/i));
-    expect(screen.getByLabelText(/Mark Milk as purchased/i)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/Mark Milk as purchased/i),
+    ).toBeInTheDocument();
   });
 
   it('deleting a purchased item removes it permanently', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: true },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
     ]);
     fireEvent.click(screen.getByLabelText(/Delete Milk/i));
     expect(screen.queryByText('Milk')).not.toBeInTheDocument();
@@ -104,15 +174,33 @@ describe('MainScreen', () => {
 
   it('shows empty state when no purchased items', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: false },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: false,
+      },
     ]);
     expect(screen.getByText(/Nothing purchased yet/i)).toBeInTheDocument();
   });
 
   it('shows Purchased section header with item count', () => {
     renderWithItems([
-      { id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: true },
-      { id: '2', name: 'Eggs', purchaseHistory: [], purchaseOrder: 1, bought: true },
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
+      {
+        id: '2',
+        name: 'Eggs',
+        purchaseHistory: [],
+        purchaseOrder: 1,
+        bought: true,
+      },
     ]);
     expect(screen.getByText('Purchased')).toBeInTheDocument();
     expect(screen.getByText('(2)')).toBeInTheDocument();

@@ -7,12 +7,18 @@ interface PurchasedListProps {
   items: GroceryItem[];
 }
 
-function sortPurchased(items: GroceryItem[], mode: PurchasedSortMode): GroceryItem[] {
+function sortPurchased(
+  items: GroceryItem[],
+  mode: PurchasedSortMode,
+): GroceryItem[] {
   const sorted = [...items];
   if (mode === 'alphabetical') {
     sorted.sort((a, b) => a.name.localeCompare(b.name));
   } else {
-    sorted.sort((a, b) => frequencyScore(b.purchaseHistory) - frequencyScore(a.purchaseHistory));
+    sorted.sort(
+      (a, b) =>
+        frequencyScore(b.purchaseHistory) - frequencyScore(a.purchaseHistory),
+    );
   }
   return sorted;
 }
@@ -32,7 +38,9 @@ export function PurchasedList({ items }: PurchasedListProps) {
         </button>
         <button
           className={`purchased-list__sort-btn${state.sortMode === 'alphabetical' ? ' purchased-list__sort-btn--active' : ''}`}
-          onClick={() => dispatch({ type: 'SET_SORT_MODE', mode: 'alphabetical' })}
+          onClick={() =>
+            dispatch({ type: 'SET_SORT_MODE', mode: 'alphabetical' })
+          }
         >
           A–Z
         </button>
@@ -40,7 +48,7 @@ export function PurchasedList({ items }: PurchasedListProps) {
       {sorted.length === 0 ? (
         <div className="purchased-list__empty">Nothing purchased yet!</div>
       ) : (
-        sorted.map(item => <PurchasedItem key={item.id} item={item} />)
+        sorted.map((item) => <PurchasedItem key={item.id} item={item} />)
       )}
     </div>
   );

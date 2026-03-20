@@ -14,13 +14,13 @@ function App() {
   return (
     <GroceryProvider>
       <div className="app">
-        <Header onOrderClick={screen === 'main' ? () => setScreen('order') : undefined} />
-        {screen === 'main' && (
-          <MainScreen onAdd={() => setScreen('add')} />
-        )}
-        {screen === 'add' && (
-          <AddScreen onClose={() => setScreen('main')} />
-        )}
+        <Header
+          onOrderClick={
+            screen === 'main' ? () => setScreen('order') : undefined
+          }
+        />
+        {screen === 'main' && <MainScreen onAdd={() => setScreen('add')} />}
+        {screen === 'add' && <AddScreen onClose={() => setScreen('main')} />}
         {screen === 'order' && (
           <OrderScreen onClose={() => setScreen('main')} />
         )}

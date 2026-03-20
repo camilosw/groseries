@@ -5,7 +5,12 @@ interface AddItemRowProps {
   onAdd: () => void;
 }
 
-export function AddItemRow({ name, inList, isNew = false, onAdd }: AddItemRowProps) {
+export function AddItemRow({
+  name,
+  inList,
+  isNew = false,
+  onAdd,
+}: AddItemRowProps) {
   return (
     <div className="add-item-row">
       <span className="add-item-row__name">

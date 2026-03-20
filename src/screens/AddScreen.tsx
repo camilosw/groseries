@@ -22,11 +22,11 @@ export function AddScreen({ onClose }: AddScreenProps) {
   const allItems = state.items;
 
   const filtered = trimmed
-    ? allItems.filter(item => item.name.toLowerCase().includes(lowerQuery))
-    : allItems.filter(item => item.bought);
+    ? allItems.filter((item) => item.name.toLowerCase().includes(lowerQuery))
+    : allItems.filter((item) => item.bought);
 
   const exactMatch = allItems.find(
-    item => item.name.toLowerCase() === lowerQuery
+    (item) => item.name.toLowerCase() === lowerQuery,
   );
   const showNewRow = trimmed.length > 0 && !exactMatch;
 
@@ -52,7 +52,11 @@ export function AddScreen({ onClose }: AddScreenProps) {
   return (
     <div className="add-screen">
       <div className="add-screen__header">
-        <button className="add-screen__back" onClick={onClose} aria-label="Back">
+        <button
+          className="add-screen__back"
+          onClick={onClose}
+          aria-label="Back"
+        >
           ←
         </button>
         <input
@@ -61,18 +65,20 @@ export function AddScreen({ onClose }: AddScreenProps) {
           type="text"
           placeholder="Search or add item…"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
         />
       </div>
 
       <ul className="add-screen__list">
-        {filtered.map(item => (
+        {filtered.map((item) => (
           <li key={item.id}>
             <AddItemRow
               name={item.name}
               inList={!item.bought}
-              onAdd={() => { if (item.bought) handleAdd(item.id); }}
+              onAdd={() => {
+                if (item.bought) handleAdd(item.id);
+              }}
             />
           </li>
         ))}

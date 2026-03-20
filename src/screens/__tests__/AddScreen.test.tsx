@@ -7,23 +7,35 @@ import type { GroceryItem } from '../../types';
 function renderWithItems(items: GroceryItem[]) {
   localStorage.setItem(
     'groceries-app-state',
-    JSON.stringify({ items, sortMode: 'frequency' })
+    JSON.stringify({ items, sortMode: 'frequency' }),
   );
   return render(
     <GroceryProvider>
       <AddScreen onClose={() => {}} />
-    </GroceryProvider>
+    </GroceryProvider>,
   );
 }
 
 const milkPurchased: GroceryItem = {
-  id: '1', name: 'Milk', purchaseHistory: [], purchaseOrder: 0, bought: true,
+  id: '1',
+  name: 'Milk',
+  purchaseHistory: [],
+  purchaseOrder: 0,
+  bought: true,
 };
 const eggsPurchased: GroceryItem = {
-  id: '2', name: 'Eggs', purchaseHistory: [], purchaseOrder: 1, bought: true,
+  id: '2',
+  name: 'Eggs',
+  purchaseHistory: [],
+  purchaseOrder: 1,
+  bought: true,
 };
 const breadToBuy: GroceryItem = {
-  id: '3', name: 'Bread', purchaseHistory: [], purchaseOrder: 2, bought: false,
+  id: '3',
+  name: 'Bread',
+  purchaseHistory: [],
+  purchaseOrder: 2,
+  bought: false,
 };
 
 describe('AddScreen', () => {
@@ -62,7 +74,9 @@ describe('AddScreen', () => {
     });
     // Milk appears as existing, but no "new item" row
     expect(screen.getByText('Milk')).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /Add Milk/i })).toHaveLength(1);
+    expect(screen.getAllByRole('button', { name: /Add Milk/i })).toHaveLength(
+      1,
+    );
   });
 
   it('pressing + on existing purchased item adds to to-buy and clears field', () => {

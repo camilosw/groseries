@@ -14,7 +14,7 @@ export function BuyList({ items }: BuyListProps) {
 
   return (
     <div className="buy-list">
-      {sorted.map(item => (
+      {sorted.map((item) => (
         <BuyItem key={item.id} item={item} />
       ))}
     </div>
