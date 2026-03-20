@@ -40,11 +40,11 @@ function SortableItem({ item }: SortableItemProps) {
       style={style}
       className={`order-item${isDragging ? ' order-item--dragging' : ''}`}
     >
-      <span className="order-item__handle" {...attributes} {...listeners} aria-label="Drag to reorder">
-        ⠿
-      </span>
       <span className={`order-item__name${item.bought ? ' order-item__name--bought' : ''}`}>
         {item.name}
+      </span>
+      <span className="order-item__handle" {...attributes} {...listeners} aria-label="Drag to reorder">
+        ⠿
       </span>
     </li>
   );
