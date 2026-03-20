@@ -87,5 +87,6 @@
 
 .add-item-row__btn--active {
   border-color: #4caf50;
-  color: #4caf50;
+  background: #4caf50;
+  color: #fff;
 }

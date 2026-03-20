@@ -23,7 +23,7 @@ export function AddScreen({ onClose }: AddScreenProps) {
 
   const filtered = trimmed
     ? allItems.filter((item) => item.name.toLowerCase().includes(lowerQuery))
-    : allItems.filter((item) => item.bought);
+    : allItems;
 
   const exactMatch = allItems.find(
     (item) => item.name.toLowerCase() === lowerQuery,
@@ -76,8 +76,13 @@ export function AddScreen({ onClose }: AddScreenProps) {
             <AddItemRow
               name={item.name}
               inList={!item.bought}
-              onAdd={() => {
-                if (item.bought) handleAdd(item.id);
+              onAdd={() => handleAdd(item.id)}
+              onRemove={() => {
+                if (item.purchaseHistory.length === 0) {
+                  dispatch({ type: 'DELETE_ITEM', id: item.id });
+                } else {
+                  dispatch({ type: 'REMOVE_FROM_BUY', id: item.id });
+                }
               }}
             />
           </li>

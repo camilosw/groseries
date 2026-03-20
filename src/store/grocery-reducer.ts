@@ -9,6 +9,7 @@ export type GroceryAction =
   | { type: 'SET_SORT_MODE'; mode: PurchasedSortMode }
   | { type: 'CREATE_AND_ADD'; name: string }
   | { type: 'ADD_TO_BUY'; id: string }
+  | { type: 'REMOVE_FROM_BUY'; id: string }
   | { type: 'REORDER'; activeId: string; overId: string };
 
 export function groceryReducer(
@@ -67,6 +68,14 @@ export function groceryReducer(
         ...state,
         items: state.items.map((item) =>
           item.id === action.id ? { ...item, bought: false } : item,
+        ),
+      };
+    }
+    case 'REMOVE_FROM_BUY': {
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.id ? { ...item, bought: true } : item,
         ),
       };
     }

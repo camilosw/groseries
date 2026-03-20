@@ -3,6 +3,7 @@ interface AddItemRowProps {
   inList: boolean;
   isNew?: boolean;
   onAdd: () => void;
+  onRemove?: () => void;
 }
 
 export function AddItemRow({
@@ -10,6 +11,7 @@ export function AddItemRow({
   inList,
   isNew = false,
   onAdd,
+  onRemove,
 }: AddItemRowProps) {
   return (
     <div className="add-item-row">
@@ -18,10 +20,10 @@ export function AddItemRow({
       </span>
       <button
         className={`add-item-row__btn${inList ? ' add-item-row__btn--active' : ''}`}
-        onClick={onAdd}
-        aria-label={inList ? 'Already in list' : `Add ${name}`}
+        onClick={inList ? onRemove : onAdd}
+        aria-label={inList ? `Remove ${name} from list` : `Add ${name}`}
       >
-        +
+        {inList ? '✓' : '+'}
       </button>
     </div>
   );
