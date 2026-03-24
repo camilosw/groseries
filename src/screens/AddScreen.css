@@ -1,6 +1,10 @@
 .add-screen {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 56px);
+  overflow: hidden;
 }
 
 .add-screen__header {
@@ -46,6 +50,8 @@
 
 .add-screen__list {
   list-style: none;
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* AddItemRow styles */
