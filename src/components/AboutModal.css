@@ -1,0 +1,64 @@
+.about-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.about-card {
+  background: var(--bg-app);
+  border-radius: 16px;
+  padding: 32px 28px 28px;
+  width: min(320px, calc(100vw - 40px));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--text-mid);
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.about-close:hover {
+  color: var(--text-dark);
+}
+
+.about-title {
+  font-family: var(--font-hand);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.about-version {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--text-mid);
+}
+
+.about-link {
+  margin-top: 8px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.about-link:hover {
+  text-decoration: underline;
+}

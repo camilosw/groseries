@@ -4,9 +4,10 @@ import './Header.css';
 interface HeaderProps {
   title?: string;
   onOrderClick?: () => void;
+  onAboutClick?: () => void;
 }
 
-export function Header({ title = 'Grocery List', onOrderClick }: HeaderProps) {
+export function Header({ title = 'Grocery List', onOrderClick, onAboutClick }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +27,11 @@ export function Header({ title = 'Grocery List', onOrderClick }: HeaderProps) {
     onOrderClick?.();
   }
 
+  function handleAboutClick() {
+    setMenuOpen(false);
+    onAboutClick?.();
+  }
+
   return (
     <header className="app-header">
       <svg
@@ -40,7 +46,7 @@ export function Header({ title = 'Grocery List', onOrderClick }: HeaderProps) {
         />
       </svg>
       <div className="app-header__title">{title}</div>
-      {onOrderClick && (
+      {(onOrderClick || onAboutClick) && (
         <div className="app-header__menu" ref={menuRef}>
           <button
             className="app-header__menu-btn"
@@ -51,12 +57,22 @@ export function Header({ title = 'Grocery List', onOrderClick }: HeaderProps) {
           </button>
           {menuOpen && (
             <div className="app-header__dropdown">
-              <button
-                className="app-header__dropdown-item"
-                onClick={handleOrderClick}
-              >
-                Order
-              </button>
+              {onOrderClick && (
+                <button
+                  className="app-header__dropdown-item"
+                  onClick={handleOrderClick}
+                >
+                  Order
+                </button>
+              )}
+              {onAboutClick && (
+                <button
+                  className="app-header__dropdown-item"
+                  onClick={handleAboutClick}
+                >
+                  About
+                </button>
+              )}
             </div>
           )}
         </div>
