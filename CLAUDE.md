@@ -63,3 +63,26 @@ src/
 - `pnpm dev` — dev server (empty initial state; FAB opens add screen)
 - `pnpm test` — run all tests with Vitest (75 passing)
 - `pnpm build` — production build
+
+## Commit convention (Conventional Commits)
+
+All commits must follow the format: `type: description` (or `type(scope): description`)
+
+Common types:
+- `fix:` — bug fix → bumps **patch** (1.0.0 → 1.0.1)
+- `feat:` — new feature → bumps **minor** (1.0.0 → 1.1.0)
+- `docs:`, `chore:`, `refactor:`, `test:`, `style:` — no version bump
+
+The `commit-msg` git hook enforces this format via commitlint.
+
+## Releasing a new version
+
+```
+pnpm release          # bumps version, updates package.json, generates CHANGELOG, creates tag
+git push --follow-tags
+```
+
+For the first release (one-time, to create the initial tag without bumping):
+```
+pnpm release:first
+```
