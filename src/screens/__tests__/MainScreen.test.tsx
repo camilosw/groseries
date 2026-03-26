@@ -111,7 +111,7 @@ describe('MainScreen', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('shows c/Nd badge when item has 2+ purchases', () => {
+  it('shows Nd badge when item has 2+ purchases', () => {
     const MS_PER_DAY = 1000 * 60 * 60 * 24;
     const now = Date.now();
     renderWithItems([
@@ -123,7 +123,7 @@ describe('MainScreen', () => {
         bought: false,
       },
     ]);
-    expect(screen.getByText(/^c\/\d+d$/)).toBeInTheDocument();
+    expect(screen.getByText(/^\d+d$/)).toBeInTheDocument();
   });
 
   it('renders purchased items', () => {

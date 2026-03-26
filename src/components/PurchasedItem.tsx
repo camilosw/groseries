@@ -32,7 +32,7 @@ export function PurchasedItem({ item }: PurchasedItemProps) {
         ariaLabel={`Edit name of ${item.name}`}
       />
       {interval !== null && (
-        <span className="purchased-item__badge">c/{Math.round(interval)}d</span>
+        <span className="purchased-item__badge">{Math.round(interval)}d</span>
       )}
       <button
         className="purchased-item__delete"
