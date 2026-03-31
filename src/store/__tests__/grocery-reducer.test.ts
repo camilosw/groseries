@@ -194,6 +194,30 @@ describe('SET_SORT_MODE', () => {
   });
 });
 
+describe('REMOVE_FROM_BUY', () => {
+  it('sets bought to true', () => {
+    const state = makeState([makeItem({ id: '1', bought: false })]);
+    const next = groceryReducer(state, { type: 'REMOVE_FROM_BUY', id: '1' });
+    expect(next.items[0].bought).toBe(true);
+  });
+
+  it('does not modify purchaseHistory', () => {
+    const history = [Date.now() - 1000];
+    const state = makeState([
+      makeItem({ id: '1', bought: false, purchaseHistory: history }),
+    ]);
+    const next = groceryReducer(state, { type: 'REMOVE_FROM_BUY', id: '1' });
+    expect(next.items[0].purchaseHistory).toEqual(history);
+  });
+
+  it('does not modify other items', () => {
+    const item2 = makeItem({ id: '2', name: 'Eggs' });
+    const state = makeState([makeItem({ id: '1' }), item2]);
+    const next = groceryReducer(state, { type: 'REMOVE_FROM_BUY', id: '1' });
+    expect(next.items[1]).toEqual(item2);
+  });
+});
+
 describe('RENAME_ITEM', () => {
   it('renames the item when name is valid and unique', () => {
     const state = makeState([makeItem({ id: '1', name: 'Milk' })]);

@@ -37,6 +37,7 @@ export function BuyItem({ item }: BuyItemProps) {
       )}
       <ItemMenu
         itemName={item.name}
+        onRestore={() => dispatch({ type: 'REMOVE_FROM_BUY', id: item.id })}
         onDelete={() => dispatch({ type: 'DELETE_ITEM', id: item.id })}
       />
     </div>

@@ -5,9 +5,10 @@ import './ItemMenu.css';
 interface ItemMenuProps {
   itemName: string;
   onDelete: () => void;
+  onRestore?: () => void;
 }
 
-export function ItemMenu({ itemName, onDelete }: ItemMenuProps) {
+export function ItemMenu({ itemName, onDelete, onRestore }: ItemMenuProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -41,6 +42,11 @@ export function ItemMenu({ itemName, onDelete }: ItemMenuProps) {
     onDelete();
   }
 
+  function handleRestore() {
+    setMenuOpen(false);
+    onRestore?.();
+  }
+
   return (
     <>
       <button
@@ -58,6 +64,11 @@ export function ItemMenu({ itemName, onDelete }: ItemMenuProps) {
             className="item-menu__dropdown"
             style={{ top: dropdownPos.top, right: dropdownPos.right }}
           >
+            {onRestore && (
+              <button className="item-menu__option" onClick={handleRestore}>
+                Restore to Purchased
+              </button>
+            )}
             <button
               className="item-menu__option item-menu__option--danger"
               onClick={handleDelete}

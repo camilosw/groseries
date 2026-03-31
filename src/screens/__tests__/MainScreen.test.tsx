@@ -233,6 +233,46 @@ describe('MainScreen', () => {
     expect(screen.queryByText('Milk')).not.toBeInTheDocument();
   });
 
+  it('"Restore to Purchased" moves a to-buy item to purchased without recording a purchase', () => {
+    const purchaseHistory = [Date.now() - 5000];
+    renderWithItems([
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory,
+        purchaseOrder: 0,
+        bought: false,
+      },
+    ]);
+    fireEvent.click(screen.getByLabelText(/Menu for Milk/i));
+    fireEvent.click(
+      screen.getByRole('button', { name: /Restore to Purchased/i }),
+    );
+    // Item should now be in the purchased list (checkbox is checked)
+    expect(
+      screen.getByLabelText(/Mark Milk as not purchased/i),
+    ).toBeInTheDocument();
+    // purchaseHistory must not have grown — no new timestamp added
+    const saved = JSON.parse(localStorage.getItem('groceries-app-state')!);
+    expect(saved.items[0].purchaseHistory).toHaveLength(purchaseHistory.length);
+  });
+
+  it('"Restore to Purchased" option is absent from purchased item menus', () => {
+    renderWithItems([
+      {
+        id: '1',
+        name: 'Milk',
+        purchaseHistory: [],
+        purchaseOrder: 0,
+        bought: true,
+      },
+    ]);
+    fireEvent.click(screen.getByLabelText(/Menu for Milk/i));
+    expect(
+      screen.queryByRole('button', { name: /Restore to Purchased/i }),
+    ).not.toBeInTheDocument();
+  });
+
   it('shows Purchased section header with item count', () => {
     renderWithItems([
       {
