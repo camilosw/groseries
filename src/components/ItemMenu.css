@@ -19,15 +19,13 @@
 }
 
 .item-menu__dropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
+  position: fixed;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   min-width: 120px;
   overflow: hidden;
-  z-index: 20;
+  z-index: 1000;
 }
 
 .item-menu__option {

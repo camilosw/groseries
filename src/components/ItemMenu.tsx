@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './ItemMenu.css';
 
 interface ItemMenuProps {
@@ -8,12 +9,18 @@ interface ItemMenuProps {
 
 export function ItemMenu({ itemName, onDelete }: ItemMenuProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
     function handleClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        !triggerRef.current?.contains(target) &&
+        !dropdownRef.current?.contains(target)
+      ) {
         setMenuOpen(false);
       }
     }
@@ -21,27 +28,45 @@ export function ItemMenu({ itemName, onDelete }: ItemMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [menuOpen]);
 
+  function handleTrigger() {
+    if (!menuOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setDropdownPos({ top: rect.bottom + 4, right: window.innerWidth - rect.right });
+    }
+    setMenuOpen((v) => !v);
+  }
+
   function handleDelete() {
     setMenuOpen(false);
     onDelete();
   }
 
   return (
-    <div className="item-menu" ref={menuRef}>
+    <>
       <button
+        ref={triggerRef}
         className="item-menu__trigger"
         aria-label={`Menu for ${itemName}`}
-        onClick={() => setMenuOpen((v) => !v)}
+        onClick={handleTrigger}
       >
         ⋮
       </button>
-      {menuOpen && (
-        <div className="item-menu__dropdown">
-          <button className="item-menu__option item-menu__option--danger" onClick={handleDelete}>
-            Delete
-          </button>
-        </div>
-      )}
-    </div>
+      {menuOpen &&
+        createPortal(
+          <div
+            ref={dropdownRef}
+            className="item-menu__dropdown"
+            style={{ top: dropdownPos.top, right: dropdownPos.right }}
+          >
+            <button
+              className="item-menu__option item-menu__option--danger"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </div>,
+          document.body
+        )}
+    </>
   );
 }
