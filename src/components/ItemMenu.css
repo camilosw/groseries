@@ -51,6 +51,7 @@
 .item-menu__quantity {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   padding: 8px 10px;
   border-bottom: 1px solid var(--line-color);

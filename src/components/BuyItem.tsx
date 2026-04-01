@@ -1,4 +1,3 @@
-import { purchaseInterval } from '../utils/frequency';
 import type { GroceryItem } from '../types';
 import { useGroceries } from '../store/grocery-context';
 import { InlineEdit } from './InlineEdit';
@@ -10,7 +9,6 @@ interface BuyItemProps {
 
 export function BuyItem({ item }: BuyItemProps) {
   const { dispatch } = useGroceries();
-  const interval = purchaseInterval(item.purchaseHistory);
 
   return (
     <div className="buy-item">
@@ -34,9 +32,6 @@ export function BuyItem({ item }: BuyItemProps) {
       />
       {item.quantity > 1 && (
         <span className="buy-item__quantity">x{item.quantity}</span>
-      )}
-      {interval !== null && (
-        <span className="buy-item__badge">{Math.round(interval)}d</span>
       )}
       <ItemMenu
         itemName={item.name}

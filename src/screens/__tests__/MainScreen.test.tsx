@@ -118,7 +118,7 @@ describe('MainScreen', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('shows Nd badge when item has 2+ purchases', () => {
+  it('shows Nd badge on purchased items with 2+ purchases', () => {
     const MS_PER_DAY = 1000 * 60 * 60 * 24;
     const now = Date.now();
     renderWithItems([
@@ -127,7 +127,7 @@ describe('MainScreen', () => {
         name: 'Milk',
         purchaseHistory: [now - 7 * MS_PER_DAY, now - 14 * MS_PER_DAY],
         purchaseOrder: 0,
-        bought: false,
+        bought: true,
       quantity: 1,
       },
     ]);
