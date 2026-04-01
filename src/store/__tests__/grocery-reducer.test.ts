@@ -12,6 +12,7 @@ function makeItem(overrides: Partial<GroceryItem> = {}): GroceryItem {
     purchaseHistory: [],
     purchaseOrder: 0,
     bought: false,
+    quantity: 1,
     ...overrides,
   };
 }
@@ -25,6 +26,12 @@ describe('CHECK_ITEM', () => {
     const state = makeState([makeItem({ id: '1' })]);
     const next = groceryReducer(state, { type: 'CHECK_ITEM', id: '1' });
     expect(next.items[0].bought).toBe(true);
+  });
+
+  it('resets quantity to 1', () => {
+    const state = makeState([makeItem({ id: '1', quantity: 5 })]);
+    const next = groceryReducer(state, { type: 'CHECK_ITEM', id: '1' });
+    expect(next.items[0].quantity).toBe(1);
   });
 
   it('appends a timestamp to purchaseHistory', () => {
@@ -280,6 +287,35 @@ describe('RENAME_ITEM', () => {
       id: '1',
       name: 'Oat Milk',
     });
+    expect(next.items[1]).toEqual(item2);
+  });
+});
+
+describe('CREATE_AND_ADD', () => {
+  it('sets quantity to 1', () => {
+    const state = makeState([]);
+    const next = groceryReducer(state, { type: 'CREATE_AND_ADD', name: 'Bread' });
+    expect(next.items[0].quantity).toBe(1);
+  });
+});
+
+describe('SET_QUANTITY', () => {
+  it('sets the quantity of the item', () => {
+    const state = makeState([makeItem({ id: '1', quantity: 1 })]);
+    const next = groceryReducer(state, { type: 'SET_QUANTITY', id: '1', quantity: 4 });
+    expect(next.items[0].quantity).toBe(4);
+  });
+
+  it('clamps quantity to minimum 1', () => {
+    const state = makeState([makeItem({ id: '1', quantity: 3 })]);
+    const next = groceryReducer(state, { type: 'SET_QUANTITY', id: '1', quantity: 0 });
+    expect(next.items[0].quantity).toBe(1);
+  });
+
+  it('does not modify other items', () => {
+    const item2 = makeItem({ id: '2', name: 'Eggs', quantity: 2 });
+    const state = makeState([makeItem({ id: '1' }), item2]);
+    const next = groceryReducer(state, { type: 'SET_QUANTITY', id: '1', quantity: 3 });
     expect(next.items[1]).toEqual(item2);
   });
 });

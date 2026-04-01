@@ -32,11 +32,16 @@ export function BuyItem({ item }: BuyItemProps) {
         }}
         ariaLabel={`Edit name of ${item.name}`}
       />
+      {item.quantity > 1 && (
+        <span className="buy-item__quantity">x{item.quantity}</span>
+      )}
       {interval !== null && (
         <span className="buy-item__badge">{Math.round(interval)}d</span>
       )}
       <ItemMenu
         itemName={item.name}
+        quantity={item.quantity}
+        onQuantityChange={(q) => dispatch({ type: 'SET_QUANTITY', id: item.id, quantity: q })}
         onRestore={() => dispatch({ type: 'REMOVE_FROM_BUY', id: item.id })}
         onDelete={() => dispatch({ type: 'DELETE_ITEM', id: item.id })}
       />

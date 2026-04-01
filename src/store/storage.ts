@@ -21,7 +21,11 @@ export function loadState(): GroceryState | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed?.items)) return null;
-    return parsed as GroceryState;
+    const items: GroceryItem[] = parsed.items.map((item: GroceryItem) => ({
+      ...item,
+      quantity: item.quantity ?? 1,
+    }));
+    return { ...parsed, items } as GroceryState;
   } catch {
     return null;
   }
