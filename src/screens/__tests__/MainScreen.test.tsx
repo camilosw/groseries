@@ -29,6 +29,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 1,
         bought: false,
+      quantity: 1,
       },
       {
         id: '2',
@@ -36,6 +37,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     const checkboxes = screen.getAllByRole('checkbox');
@@ -52,6 +54,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByLabelText(/Mark Milk as purchased/i));
@@ -73,6 +76,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
       {
         id: '2',
@@ -80,6 +84,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 1,
         bought: false,
+      quantity: 1,
       },
     ]);
     expect(screen.getByText('To Buy')).toBeInTheDocument();
@@ -94,6 +99,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
       {
         id: '2',
@@ -101,6 +107,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 1,
         bought: true,
+      quantity: 1,
       },
     ]);
     expect(
@@ -111,7 +118,7 @@ describe('MainScreen', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('shows Nd badge when item has 2+ purchases', () => {
+  it('shows Nd badge on purchased items with 2+ purchases', () => {
     const MS_PER_DAY = 1000 * 60 * 60 * 24;
     const now = Date.now();
     renderWithItems([
@@ -120,7 +127,8 @@ describe('MainScreen', () => {
         name: 'Milk',
         purchaseHistory: [now - 7 * MS_PER_DAY, now - 14 * MS_PER_DAY],
         purchaseOrder: 0,
-        bought: false,
+        bought: true,
+      quantity: 1,
       },
     ]);
     expect(screen.getByText(/^\d+d$/)).toBeInTheDocument();
@@ -134,6 +142,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
     ]);
     expect(screen.getByText('Milk')).toBeInTheDocument();
@@ -150,6 +159,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByLabelText(/Mark Milk as not purchased/i));
@@ -166,6 +176,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByLabelText(/Menu for Milk/i));
@@ -181,6 +192,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByLabelText(/Menu for Milk/i));
@@ -196,6 +208,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     expect(screen.getByText(/Nothing purchased yet/i)).toBeInTheDocument();
@@ -209,6 +222,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByText('Milk'));
@@ -223,6 +237,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByText('Milk'));
@@ -242,6 +257,7 @@ describe('MainScreen', () => {
         purchaseHistory,
         purchaseOrder: 0,
         bought: false,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByLabelText(/Menu for Milk/i));
@@ -265,6 +281,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByLabelText(/Menu for Milk/i));
@@ -281,6 +298,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
       {
         id: '2',
@@ -288,6 +306,7 @@ describe('MainScreen', () => {
         purchaseHistory: [],
         purchaseOrder: 1,
         bought: true,
+      quantity: 1,
       },
     ]);
     expect(screen.getByText('Purchased')).toBeInTheDocument();

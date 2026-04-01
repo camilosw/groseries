@@ -11,7 +11,8 @@ export type GroceryAction =
   | { type: 'ADD_TO_BUY'; id: string }
   | { type: 'REMOVE_FROM_BUY'; id: string }
   | { type: 'REORDER'; activeId: string; overId: string }
-  | { type: 'RENAME_ITEM'; id: string; name: string };
+  | { type: 'RENAME_ITEM'; id: string; name: string }
+  | { type: 'SET_QUANTITY'; id: string; quantity: number };
 
 export function groceryReducer(
   state: GroceryState,
@@ -27,6 +28,7 @@ export function groceryReducer(
             ? {
                 ...item,
                 bought: true,
+                quantity: 1,
                 purchaseHistory: pruneHistory([...item.purchaseHistory, now]),
               }
             : item,
@@ -61,6 +63,7 @@ export function groceryReducer(
         purchaseHistory: [],
         purchaseOrder: maxOrder + 1,
         bought: false,
+        quantity: 1,
       };
       return { ...state, items: [...state.items, newItem] };
     }
@@ -111,6 +114,15 @@ export function groceryReducer(
         ...state,
         items: state.items.map((item) =>
           item.id === action.id ? { ...item, name: trimmed } : item,
+        ),
+      };
+    }
+    case 'SET_QUANTITY': {
+      const quantity = Math.max(1, action.quantity);
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.id ? { ...item, quantity } : item,
         ),
       };
     }

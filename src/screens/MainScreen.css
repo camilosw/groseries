@@ -101,6 +101,15 @@
   padding: 0;
 }
 
+.buy-item__quantity {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--orange);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .buy-item__badge {
   font-family: var(--font-ui);
   font-size: 11px;
@@ -186,6 +195,15 @@
   outline: none;
   width: 100%;
   padding: 0;
+}
+
+.purchased-item__quantity {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--orange);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .purchased-item__badge {

@@ -31,6 +31,7 @@ describe('PurchasedList', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
       {
         id: '2',
@@ -38,6 +39,7 @@ describe('PurchasedList', () => {
         purchaseHistory: [],
         purchaseOrder: 1,
         bought: true,
+      quantity: 1,
       },
     ]);
     expect(screen.getByText('Milk')).toBeInTheDocument();
@@ -58,6 +60,7 @@ describe('PurchasedList', () => {
         purchaseHistory: [now - 60 * MS_PER_DAY],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
       {
         id: '2',
@@ -69,6 +72,7 @@ describe('PurchasedList', () => {
         ],
         purchaseOrder: 1,
         bought: true,
+      quantity: 1,
       },
     ]);
     const items = screen.getAllByRole('checkbox');
@@ -84,6 +88,7 @@ describe('PurchasedList', () => {
         purchaseHistory: [],
         purchaseOrder: 0,
         bought: true,
+      quantity: 1,
       },
       {
         id: '2',
@@ -91,6 +96,7 @@ describe('PurchasedList', () => {
         purchaseHistory: [],
         purchaseOrder: 1,
         bought: true,
+      quantity: 1,
       },
     ]);
     fireEvent.click(screen.getByText('A–Z'));
@@ -109,6 +115,7 @@ describe('PurchasedList', () => {
           purchaseHistory: [now - 60 * MS_PER_DAY],
           purchaseOrder: 0,
           bought: true,
+      quantity: 1,
         },
         {
           id: '2',
@@ -116,6 +123,7 @@ describe('PurchasedList', () => {
           purchaseHistory: [now - 1 * MS_PER_DAY, now - 8 * MS_PER_DAY],
           purchaseOrder: 1,
           bought: true,
+      quantity: 1,
         },
       ],
       'alphabetical',

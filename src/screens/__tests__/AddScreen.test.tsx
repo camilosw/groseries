@@ -22,6 +22,7 @@ const milkPurchased: GroceryItem = {
   purchaseHistory: [],
   purchaseOrder: 0,
   bought: true,
+      quantity: 1,
 };
 const eggsPurchased: GroceryItem = {
   id: '2',
@@ -29,6 +30,7 @@ const eggsPurchased: GroceryItem = {
   purchaseHistory: [],
   purchaseOrder: 1,
   bought: true,
+      quantity: 1,
 };
 const breadToBuy: GroceryItem = {
   id: '3',
@@ -36,6 +38,7 @@ const breadToBuy: GroceryItem = {
   purchaseHistory: [],
   purchaseOrder: 2,
   bought: false,
+      quantity: 1,
 };
 
 describe('AddScreen', () => {
