@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.5.0](https://github.com/camilosw/groceries/compare/v1.4.0...v1.5.0) (2026-04-01)
+
+
+### Features
+
+* add quantity field to grocery items ([#8](https://github.com/camilosw/groceries/issues/8)) ([bb021b2](https://github.com/camilosw/groceries/commit/bb021b2e083d4649cd378fcc8098ce8d2d6baeb5))
+
 ## [1.4.0](https://github.com/camilosw/groceries/compare/v1.3.0...v1.4.0) (2026-03-31)
 
 
